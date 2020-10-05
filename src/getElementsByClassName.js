@@ -7,4 +7,6 @@
 var getElementsByClassName = function(className
 ) {
   // your code here
+  // test comment
+  // rolo comment
 };
