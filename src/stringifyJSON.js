@@ -18,28 +18,74 @@ var stringifyJSON = function(obj) {
   // handle collections after: each value inside likely either a primitive type or edge case of unstringifiable value
 
   // handle strings
-  // add '"' to strings
+  if (typeof obj === 'string') {
+    // wrap '"' around strings
+    return '"' + obj + '"';
 
   // handle numbers (including infinity, negative numbers)
-  // infinity is undefined
-  // absolute values of numbers handled differently???
-  // >= 0 numbers
+  } else if (typeof obj === 'number') {
+    // infinity is undefined
+    if (obj === Infinity) {
+      return undefined;
+    // absolute values of numbers handled differently???
+    } else if (obj < 0) {
+      // >= 0 numbers
+      var abso = Math.abs(obj);
+      return abso.toString();
+    } else {
+      return obj.toString();
+    }
+
 
   // handle booleans
+  } else if (typeof obj === 'boolean') {
+    return obj.toString();
 
   // handle 'null'
-
+  } else if (obj === null) {
+    return 'null';
   // handle 'undefined' and functions (think these are just empty objects?)
+  } else if (typeof obj === 'undefined' || typeof obj === 'function') {
+    return '{}';
 
   // handle array collections before objects
-  // length 0 (empty arrays)
-  // length 1 (recursive call on value + syntax)
-  // length >1 (recursive call on each item in array + syntax)
+  } else if (Array.isArray(obj)) {
+    // length 0 (empty arrays)
+    if (obj.length === 0) {
+      return '[]';
+    // length 1 (recursive call on value + syntax)
+    } else if (obj.length === 1) {
+      return '[' + stringifyJSON(obj[0]) + ']';
+    // length >1 (recursive call on each item in array + syntax)
+    } else if (obj.length > 1) {
+      var objArr = '';
+      // iterate through items in array
+      for (var i = 0; i < obj.length; i++) {
+        // if last item add result of recursive call on index value
+        if (i === obj.length - 1) {
+          objArr = objArr + stringifyJSON(obj[i]);
+        // else add result plus ','
+        } else if (i < obj.length - 1) {
+          objArr = objArr + stringifyJSON(obj[i]) + ',';
+        }
+        // return objArr urrounded by stringified braces
+      }
+      return '[' + objArr + ']';
+    }
 
 
   // handle objects
-  // empty object ('{}')
-  // object with >= 1 k/v pair (recursive call on interior keys and values + proper syntax)
+  } else {
+    var results = [];
+    // empty object ('{}')
+    // object with >= 1 k/v pair (recursive call on interior keys and values + proper syntax)
+    for (var key in obj) {
+      if (typeof obj[key] !== 'function' && typeof obj[key] !== 'undefined') {
+        results.push(stringifyJSON(key) + ':' + stringifyJSON(obj[key]));
+      }
+    }
+    return '{' + results.join() + '}';
 
   //
+  }
 };

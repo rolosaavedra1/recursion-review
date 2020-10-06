@@ -1,4 +1,31 @@
 var FILL_ME_IN = true;
+// this should be the comparison of the result of the native function to our function's result
+// so basically a forEach comparison of individual function calls against each other?
+//so it should be a function that executes a function if given the name for it
+//didn't we do that in precourse?
+// yup, and i think it uses underscore ... this is the one from the prior version of the problem
+// i think it won't work though, we have to write it within FILL_ME_IN. I might just turn this in and work on it later. I know what i have to do to test it, but don't have time atm
+// could we turn in "attempted, will submit completed work later in the day"?
+
+// prior version of recursion testing function
+// describe('stringifyJSON', function() {
+//   it('should match the result of calling JSON.stringify', function() {
+
+//     stringifiableObjects.forEach(function(test) {
+//       var expected = JSON.stringify(test);
+//       var result = stringifyJSON(test);
+//       expect(result).to.equal(expected);
+//     });
+
+//     unstringifiableValues.forEach(function(obj) {
+//       var expected = JSON.stringify(obj);
+//       var result = stringifyJSON(obj);
+//       expect(result).to.equal(expected);
+//     });
+
+//   });
+// });
+
 
 var validStrings, invalidStrings, // used for stringifyJSON and parseJSON specs
   weirdObjects; // used for stringifyJSON spec
